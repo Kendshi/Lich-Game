@@ -14275,15 +14275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca32ba2cef03f7f4eb7e49e94e611dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _properties: {Pivot: {fileID: 168503595}, Speed: 0.1, Smoothness: 0.2}
-  _raycastMask:
-    m_Bits: 64
-  _groundMask:
-    m_Bits: 64
-  _mouseSensitive: 0.01
-  _keyboardSensitive: 0.01
-  _camera: {fileID: 0}
-  _dragEnabled: 0
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92910,7 +92901,7 @@ GameObject:
   - component: {fileID: 2089176076}
   - component: {fileID: 2089176075}
   m_Layer: 1
-  m_Name: Sphere
+  m_Name: CameraPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92931,8 +92922,9 @@ MonoBehaviour:
   moveSpeed: 5
   useSmoothMovement: 1
   smoothTime: 0.02
-  movementSpace: 0
   playerCamera: {fileID: 330585546}
+  inputActions: {fileID: -944628639613478452, guid: 5e1a947d9e6147a4d811aa264d371a59, type: 3}
+  axisController: {fileID: 2064339646}
 --- !u!23 &2089176076
 MeshRenderer:
   m_ObjectHideFlags: 0

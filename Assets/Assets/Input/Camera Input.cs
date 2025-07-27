@@ -93,12 +93,12 @@ public partial class @CameraInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""a88f4c4a-ad49-45f5-84d1-6ccb97b89afe"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Rotate"",
@@ -106,7 +106,7 @@ public partial class @CameraInput: IInputActionCollection2, IDisposable
                     ""id"": ""9ae7ee4e-85ee-4914-91c9-18ea5c1a13b1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -170,9 +170,9 @@ public partial class @CameraInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""4703c56c-39f5-4a69-a552-d63d93a4013f"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keybord"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
@@ -9,12 +11,27 @@ public class CameraController : MonoBehaviour
 
     [Header("Ссылки")]
     [SerializeField] private Transform playerCamera;         // Ссылка на камеру
+    [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private CinemachineInputAxisController axisController;
+
+    private InputAction m_Rotate;
 
     // Переменные для плавного движения
     private Vector3 currentVelocity;
 
     // Кэшированные компоненты
     private Transform cachedTransform;
+
+    void OnEnable()
+    {
+        inputActions.FindActionMap("CameraControl").Enable();
+    }
+
+    void Awake()
+    {
+        m_Rotate = InputSystem.actions.FindAction("Rotate");
+        axisController.Controllers.ForEach(control => control.Enabled = false);
+    }
 
     void Start()
     {
@@ -36,11 +53,19 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        //HandleMovement();
-        HandleMovementAlternative();
-    }   
+        HandleMovement();
 
-    private void HandleMovementAlternative()
+        if (m_Rotate.IsPressed())
+        {
+            axisController.Controllers[0].Enabled = true;
+        }
+        else
+        { 
+            axisController.Controllers[0].Enabled = false;
+        }
+    }
+
+    private void HandleMovement()
     {
         if (playerCamera == null) return;
 
@@ -89,5 +114,10 @@ public class CameraController : MonoBehaviour
         {
             cachedTransform.Translate(currentVelocity * Time.deltaTime, Space.World);
         }
+    }
+
+    void OnDisable()
+    {
+        inputActions.FindActionMap("CameraControl").Disable();
     }
 }
