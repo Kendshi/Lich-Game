@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineInputAxisController axisController;
 
     private InputAction m_Rotate;
+    private InputAction m_Move;
 
     // Переменные для плавного движения
     private Vector3 currentVelocity;
@@ -30,7 +31,8 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         m_Rotate = InputSystem.actions.FindAction("Rotate");
-        axisController.Controllers.ForEach(control => control.Enabled = false);
+        m_Move = InputSystem.actions.FindAction("Move");
+        axisController.Controllers[1].Enabled = true;
     }
 
     void Start()
@@ -55,22 +57,15 @@ public class CameraController : MonoBehaviour
     {
         HandleMovement();
 
-        if (m_Rotate.IsPressed())
-        {
-            axisController.Controllers[0].Enabled = true;
-        }
-        else
-        { 
-            axisController.Controllers[0].Enabled = false;
-        }
+        axisController.Controllers[0].Enabled = m_Rotate.IsPressed();
     }
 
     private void HandleMovement()
     {
         if (playerCamera == null) return;
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = m_Move.ReadValue<Vector2>().x;
+        float verticalInput = m_Move.ReadValue<Vector2>().y;
 
         // Если есть ввод
         if (Mathf.Abs(horizontalInput) > 0.3f || Mathf.Abs(verticalInput) > 0.3f)
@@ -99,21 +94,13 @@ public class CameraController : MonoBehaviour
         else
         {
             // Быстрая остановка при отсутствии ввода
-            if (useSmoothMovement)
-            {
-                currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * (1f / smoothTime));
-            }
-            else
-            {
-                currentVelocity = Vector3.zero;
-            }
+            currentVelocity = useSmoothMovement ? Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * (1f / smoothTime)) : Vector3.zero;
         }
 
         // Применяем движение только если есть скорость
         if (currentVelocity != Vector3.zero)
-        {
             cachedTransform.Translate(currentVelocity * Time.deltaTime, Space.World);
-        }
+
     }
 
     void OnDisable()
